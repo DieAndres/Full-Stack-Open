@@ -110,9 +110,9 @@ const App = () => {
   const onDeletePerson = person => {
     if (window.confirm(`Delete ${person.name}?`)) {
       personsService.deletePerson(person.id)
-        .then(getperson => {
-          setPersons(persons.filter(p => p.id !== getperson.id))
-          setMessage({ text: `${getperson.name} was eliminated`, error: false })
+        .then(() => {
+          setPersons(persons.filter(p => p.id !== person.id))
+          setMessage({ text: `${person.name} was eliminated`, error: false })
           setTimeout(() => {
             setMessage({ text: null, error: false })
           }, 5000)
