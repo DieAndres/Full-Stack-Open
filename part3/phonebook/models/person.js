@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 require('dotenv').config()
 
 const url = process.env.MONGODB_URI
-mongoose.set('strictQuery',false)
+mongoose.set('strictQuery', false)
 
 mongoose.connect(url)
     .then(result => {
@@ -18,7 +18,15 @@ const personSchema = new mongoose.Schema({
         minLength: 3,
         required: true
     },
-    number: String,
+    number: {
+        type: String,
+        validate: {
+            validator: (number) => {
+                return /^\d{2,3}-\d+$/.test(number);
+            },
+            msg: "invalid phone number"
+        }
+    },
 })
 
 personSchema.set('toJSON', {
@@ -29,4 +37,4 @@ personSchema.set('toJSON', {
     }
 })
 
-module.exports = mongoose.model('Person', personSchema,'persons')
+module.exports = mongoose.model('Person', personSchema, 'persons')
