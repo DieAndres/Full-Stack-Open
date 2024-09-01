@@ -33,7 +33,6 @@ const Persons = ({ persons, onDeletePerson }) => {
 };
 
 const Notification = ({ message, error }) => {
-  console.log(message)
   if (message === null) {
     return null
   }
@@ -81,7 +80,11 @@ const App = () => {
           }, 5000)
         })
         .catch((error) => {
-          console.error('Error creating person:', error);
+          console.log(error.response.data.error)
+          setMessage({ text: error.response.data.error, error: true })
+          setTimeout(() => {
+            setMessage({ text: null, error: true })
+          }, 5000)
         })
       setNewName('');
       setNewNumber('');
